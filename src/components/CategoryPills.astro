@@ -1,0 +1,29 @@
+---
+import type { TaxonomyItem } from '../utils/blog';
+
+interface Props {
+  categories: TaxonomyItem[];
+}
+
+const { categories } = Astro.props;
+---
+
+{
+  categories.length > 0 && (
+    <ul class="flex flex-wrap gap-2.5" role="list">
+      {categories.map((category) => (
+        <li>
+          <a
+            href={`/category/${category.slug}/`}
+            class="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted px-4 py-1.5 text-[0.95rem] font-medium text-foreground no-underline transition-colors hover:border-primary hover:text-primary"
+          >
+            {category.name}
+            <span class="text-xs text-muted-foreground">
+              ({category.count})
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

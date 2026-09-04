@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_NAME } from '../consts';
+---
+
+<BaseLayout
+  title="প্রাইভেসি পলিসি"
+  description={`${SITE_NAME}-এর প্রাইভেসি পলিসি।`}
+>
+  <nav aria-label="ব্রেডক্রাম্ব" class="mb-6 text-sm text-muted-foreground">
+    <ol class="flex flex-wrap items-center gap-1.5">
+      <li><a href="/" class="hover:text-foreground hover:underline">হোম</a></li>
+      <li aria-hidden="true">/</li>
+      <li aria-current="page" class="text-foreground">প্রাইভেসি পলিসি</li>
+    </ol>
+  </nav>
+
+  <article class="mx-auto max-w-3xl">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground sm:text-4xl">প্রাইভেসি পলিসি</h1>
+      <p class="mt-2 text-sm text-muted-foreground">
+        সর্বশেষ আপডেট: ৪ সেপ্টেম্বর ২০২৬
+      </p>
+    </header>
+
+    <div class="prose">
+      <h2>তথ্য সংগ্রহ</h2>
+      <p>
+        {SITE_NAME} একটি স্ট্যাটিক ব্লগ সাইট। আমরা আপনার ব্যক্তিগত তথ্য সংগ্রহ করি না। তবে যোগাযোগ ফর্মের মাধ্যমে আপনি যে তথ্য প্রদান করেন সেটি শুধুমাত্র আপনার বার্তার উত্তর দেওয়ার জন্য ব্যবহৃত হয়।
+      </p>
+
+      <h2>কুকিজ</h2>
+      <p>
+        আমাদের সাইটে আমরা কোনো ট্র্যাকিং কুকিজ ব্যবহার করি না। তৃতীয় পক্ষের কুকিজও ব্যবহৃত হয় না।
+      </p>
+
+      <h2>তৃতীয় পক্ষের সেবা</h2>
+      <p>
+        আমরা যোগাযোগ ফর্মের জন্য Web3Forms ব্যবহার করি। এই সেবা শুধুমাত্র আপনার বার্তা পাঠানোর জন্য ব্যবহৃত হয়। তাদের প্রাইভেসি পলিসি সম্পর্কে জানতে তাদের ওয়েবসাইট দেখুন।
+      </p>
+
+      <h2>নিরাপত্তা</h2>
+      <p>
+        আমরা আপনার তথ্যের নিরাপত্তা নিশ্চিত করতে সর্বোচ্চ চেষ্টা করি। তবে ইন্টারনেটে কোনো পদ্ধতিও ১০০% নিরাপদ নয়।
+      </p>
+
+      <h2>পরিবর্তন</h2>
+      <p>
+        আমরা সময়ে সময়ে এই প্রাইভেসি পলিসি আপডেট করতে পারি। পরিবর্তনগুলো এই পৃষ্ঠায় প্রকাশ করা হবে।
+      </p>
+
+      <h2>যোগাযোগ</h2>
+      <p>
+        প্রাইভেসি সম্পর্কে কোনো প্রশ্ন থাকলে আমাদের
+        <a href="/contact/">যোগাযোগ পৃষ্ঠায়</a>
+        যোগাযোগ করুন।
+      </p>
+    </div>
+  </article>
+</BaseLayout>

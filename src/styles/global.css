@@ -1,0 +1,389 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Local Bengali font (self-hosted, no external requests)
+------------------------------------------------------------------- */
+@font-face {
+  font-family: "SolaimanLipi";
+  src: url("/fonts/SolaimanLipi.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ------------------------------------------------------------------
+   Design tokens — light (brand palette)
+------------------------------------------------------------------- */
+:root {
+  --primary: oklch(55% 0.15 175);
+  --primary-foreground: oklch(98% 0.01 175);
+
+  --background: oklch(99% 0.005 250);
+  --foreground: oklch(25% 0.02 250);
+
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(25% 0.02 250);
+
+  --muted: oklch(95% 0.01 250);
+  --muted-foreground: oklch(50% 0.02 250);
+
+  --border: oklch(90% 0.015 250);
+
+  --link: oklch(50% 0.14 200);
+
+  --code-bg: oklch(96% 0.008 250);
+
+  color-scheme: light;
+}
+
+/* ------------------------------------------------------------------
+   Design tokens — dark
+------------------------------------------------------------------- */
+.dark {
+  --primary: oklch(78% 0.12 175);
+  --primary-foreground: oklch(18% 0.03 175);
+
+  --background: oklch(15% 0.012 250);
+  --foreground: oklch(93% 0.008 250);
+
+  --card: oklch(19% 0.014 250);
+  --card-foreground: oklch(93% 0.008 250);
+
+  --muted: oklch(24% 0.014 250);
+  --muted-foreground: oklch(68% 0.02 250);
+
+  --border: oklch(29% 0.015 250);
+
+  --link: oklch(72% 0.12 200);
+
+  --code-bg: oklch(13% 0.012 250);
+
+  color-scheme: dark;
+}
+
+/* Map tokens to Tailwind utilities (var-based so dark mode flips) */
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-link: var(--link);
+
+  --font-sans: "SolaimanLipi", "Hind Siliguri", "Noto Sans Bengali",
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+/* ------------------------------------------------------------------
+   Base
+------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    line-height: 1.8;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  /* Respect users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------
+   Accessibility helpers
+------------------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: -9999px;
+  z-index: 100;
+  padding: 0.6rem 1.1rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 600;
+  border-radius: 0 0 0.5rem 0;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* ------------------------------------------------------------------
+   Article typography (.prose) — tuned for long-form Bengali reading
+------------------------------------------------------------------- */
+@layer components {
+  .prose {
+    color: var(--foreground);
+    font-size: 1.125rem;
+    line-height: 1.9;
+    overflow-wrap: break-word;
+  }
+  .prose > :first-child {
+    margin-top: 0;
+  }
+
+  .prose h2 {
+    font-size: 1.6rem;
+    line-height: 1.45;
+    font-weight: 700;
+    margin: 2.75rem 0 1rem;
+    scroll-margin-top: 6rem;
+  }
+  .prose h3 {
+    font-size: 1.3rem;
+    line-height: 1.5;
+    font-weight: 700;
+    margin: 2.25rem 0 0.85rem;
+    scroll-margin-top: 6rem;
+  }
+  .prose h4 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 1.75rem 0 0.75rem;
+    scroll-margin-top: 6rem;
+  }
+
+  .prose p {
+    margin: 1.25rem 0;
+  }
+
+  .prose a {
+    color: var(--link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .prose a:hover {
+    color: var(--primary);
+  }
+
+  .prose ul,
+  .prose ol {
+    margin: 1.25rem 0;
+    padding-left: 1.75rem;
+  }
+  .prose ul {
+    list-style: disc;
+  }
+  .prose ol {
+    list-style: decimal;
+  }
+  .prose li {
+    margin: 0.5rem 0;
+  }
+  .prose li::marker {
+    color: var(--primary);
+  }
+
+  .prose blockquote {
+    margin: 1.75rem 0;
+    padding: 0.5rem 1.25rem;
+    border-left: 3px solid var(--primary);
+    background: var(--muted);
+    border-radius: 0 0.5rem 0.5rem 0;
+    color: var(--muted-foreground);
+  }
+  .prose blockquote p {
+    margin: 0.75rem 0;
+  }
+
+  .prose hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+
+  .prose img {
+    max-width: 100%;
+    height: auto;
+    margin: 2rem auto;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+  }
+
+  .prose table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 1rem;
+  }
+  .prose th {
+    background: var(--muted);
+    font-weight: 700;
+    text-align: left;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .prose td {
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--border);
+  }
+
+  /* Inline code (block code is reset below) */
+  .prose code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    padding: 0.15em 0.4em;
+  }
+  .prose pre code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-size: inherit;
+    border-radius: 0;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Code blocks — Shiki dual theme (light/dark via CSS variables)
+------------------------------------------------------------------- */
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light);
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+.dark .astro-code,
+.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+.dark .astro-code {
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+/* Standalone <pre> (no JS enhancement) */
+.prose pre.astro-code {
+  margin: 1.75rem 0;
+  padding: 1rem 1.25rem;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+/* JS-enhanced wrapper: language label + copy button */
+.code-block {
+  margin: 1.75rem 0;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--code-bg);
+}
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.4rem 0.5rem 0.4rem 1rem;
+  background: var(--muted);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  color: var(--muted-foreground);
+}
+.code-block-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--card);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.code-block-copy:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.code-block pre.astro-code {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  background: transparent;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+/* ------------------------------------------------------------------
+   Table of contents — scroll-spy current state
+------------------------------------------------------------------- */
+.toc-link {
+  display: block;
+  padding: 0.2rem 0;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  padding-left: 0.75rem;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.toc-link:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Details/summary polish */
+details > summary {
+  cursor: pointer;
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* TOC chevron rotation */
+details[open] > summary .toc-chevron {
+  transform: rotate(90deg);
+}

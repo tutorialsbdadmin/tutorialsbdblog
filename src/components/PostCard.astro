@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets';
+import type { Post } from '../utils/blog';
+import { formatDate, getReadingTime, postUrl, slugify } from '../utils/blog';
+
+interface Props {
+  post: Post;
+  headingLevel?: 'h2' | 'h3';
+  /** Eager-load the image (use only for the first visible card) */
+  eager?: boolean;
+}
+
+const { post, headingLevel = 'h3', eager = false } = Astro.props;
+const { data } = post;
+const url = postUrl(post);
+const Heading = headingLevel;
+---
+
+<article
+  class="flex flex-col gap-5 border-b border-border py-7 last:border-b-0 sm:flex-row sm:gap-7"
+>
+  {
+    data.heroImage && (
+      <a
+        href={url}
+        tabindex="-1"
+        aria-hidden="true"
+        class="block shrink-0 sm:w-60 lg:w-72"
+      >
+        <Image
+          src={data.heroImage}
+          alt={data.heroImageAlt ?? data.title}
+          width={640}
+          height={360}
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          class="aspect-video w-full rounded-lg border border-border object-cover"
+        />
+      </a>
+    )
+  }
+
+  <div class="flex min-w-0 flex-1 flex-col">
+    <Heading class="text-xl leading-snug font-bold sm:text-2xl sm:leading-snug">
+      <a
+        href={url}
+        class="text-foreground no-underline transition-colors hover:text-primary"
+      >
+        {data.title}
+      </a>
+    </Heading>
+
+    <p class="mt-2 line-clamp-3 text-[1.02rem] leading-relaxed text-muted-foreground">
+      {data.description}
+    </p>
+
+    <div
+      class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground"
+    >
+      <time datetime={data.pubDate.toISOString()}>
+        {formatDate(data.pubDate)}
+      </time>
+      <span aria-hidden="true">•</span>
+      <a
+        href={`/category/${slugify(data.category)}/`}
+        class="font-medium text-primary no-underline hover:underline"
+      >
+        {data.category}
+      </a>
+      <span aria-hidden="true">•</span>
+      <span>{getReadingTime(post.body)} মিনিট পড়া</span>
+    </div>
+  </div>
+</article>

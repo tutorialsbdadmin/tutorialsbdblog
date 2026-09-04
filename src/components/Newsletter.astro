@@ -1,0 +1,54 @@
+---
+
+---
+
+<section class="not-prose mt-10 rounded-xl border border-border bg-muted/50 p-6 sm:p-8">
+  <div class="mx-auto max-w-lg text-center">
+    <h2 class="text-xl font-bold text-foreground">নিউজলেটার</h2>
+    <p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+      নতুন টিউটোরিয়াল ও আপডেট সম্পর্কে জানতে আমাদের নিউজলেটারে সাবস্ক্রাইব করুন।
+    </p>
+    <form
+      class="mt-5 flex flex-col gap-3 sm:flex-row"
+      action="#"
+      method="post"
+      data-newsletter-form
+    >
+      <label for="newsletter-email" class="sr-only">ইমেইল ঠিকানা</label>
+      <input
+        type="email"
+        id="newsletter-email"
+        name="email"
+        required
+        placeholder="আপনার ইমেইল ঠিকানা"
+        class="flex-1 rounded-lg border border-border bg-card px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+        aria-describedby="newsletter-status"
+      />
+      <button
+        type="submit"
+        class="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:opacity-90"
+      >
+        সাবস্ক্রাইব
+      </button>
+    </form>
+    <p
+      id="newsletter-status"
+      class="mt-3 text-sm text-muted-foreground empty:hidden"
+      role="status"
+      aria-live="polite"
+    ></p>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-newsletter-form]').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const status = form.querySelector<HTMLElement>('[role="status"]');
+      if (status) {
+        status.textContent = 'ধন্যবাদ! আপনি সফলভাবে সাবস্ক্রাইব করেছেন।';
+      }
+      form.reset();
+    });
+  });
+</script>

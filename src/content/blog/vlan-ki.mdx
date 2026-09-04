@@ -1,0 +1,73 @@
+---
+title: "VLAN কী?"
+description: "VLAN (Virtual Local Area Network) কী, কীভাবে কাজ করে এবং কেন ব্যবহার করেন — সহজ বাংলা টিউটোরিয়াল।"
+pubDate: 2026-08-05
+category: "Networking"
+tags:
+  - VLAN
+  - Networking
+  - CCNA
+author: "TutorialsBD"
+draft: false
+---
+
+## VLAN কী?
+
+VLAN (Virtual Local Area Network) হলো একটি লজিক্যাল নেটওয়ার্ক যা ফিজিক্যাল সীমাবদ্ধতা ছাড়াই একই সুইচে থাকা ডিভাইসগুলোকে আলাদা আলাদা নেটওয়ার্কে ভাগ করে।
+
+## VLAN কেন ব্যবহার করেন?
+
+### নিরাপত্তা
+
+VLAN বিভিন্ন বিভাগের ট্রাফিক আলাদা করে। যেমন, অ্যাকাউন্টিং বিভাগের ডিভাইস ইঞ্জিনিয়ারিং বিভাগের সার্ভারে প্রবেশ করতে পারবে না।
+
+### পারফরম্যান্স
+
+ব্রডকাস্ট ডোমেইন ছোট হওয়ায় নেটওয়ার্কের পারফরম্যান্স বাড়ে।
+
+### ফ্লেক্সিবিলিটি
+
+জিওগ্রাফিক্যালি দূরে থাকা ডিভাইসকেও একই VLAN-এ রাখা যায়।
+
+## VLAN কাজ করে কীভাবে?
+
+### ট্যাগিং
+
+প্রতিটি ফ্রেমে একটি VLAN ID ট্যাগ যোগ করা হয়। IEEE 802.1Q স্ট্যান্ডার্ড এই ট্যাগিং প্রক্রিয়া নিয়ন্ত্রণ করে।
+
+### সুইচ পোর্ট কনফিগ
+
+```bash
+# Cisco সুইচে VLAN তৈরি
+Switch(config)# vlan 10
+Switch(config-vlan)# name SALES
+
+# পোর্টকে VLAN-এ অ্যাসাইন
+Switch(config)# interface FastEthernet 0/1
+Switch(config-if)# switchport mode access
+Switch(config-if)# switchport access vlan 10
+```
+
+### Trunk লিঙ্ক
+
+একটি Trunk লিঙ্ক একাধিক VLAN-এর ট্রাফিক বহন করতে পারে।
+
+```bash
+# Trunk পোর্ট কনফিগ
+Switch(config)# interface GigabitEthernet 0/1
+Switch(config-if)# switchport mode trunk
+Switch(config-if)# switchport trunk allowed vlan 10,20,30
+```
+
+## VLAN ধরন
+
+| ধরন | বিবরণ |
+|------|--------|
+| ডিফল্ট VLAN | VLAN 1 — সব পোর্ট ডিফল্টে এতে থাকে |
+| ডেটা VLAN | সাধারণ নেটওয়ার্ক ট্রাফিকের জন্য |
+| ভয়েস VLAN | VoIP ট্রাফিকের জন্য আলাদা VLAN |
+| ম্যানেজমেন্ট VLAN | সুইচ ম্যানেজমেন্টের জন্য |
+
+## সারমর্ম
+
+VLAN হলো নেটওয়ার্ক সেগমেন্টেশনের একটি শক্তিশালী পদ্ধতি। CCNA পরীক্ষার জন্য VLAN সম্পর্কে গভীর জ্ঞান অত্যন্ত গুরুত্বপূর্ণ।

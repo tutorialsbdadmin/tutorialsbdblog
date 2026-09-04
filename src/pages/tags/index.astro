@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts, getTags, slugify } from '../../utils/blog';
+
+const allPosts = await getPublishedPosts();
+const tags = getTags(allPosts);
+---
+
+<BaseLayout
+  title="ট্যাগ"
+  description="TutorialsBD-এর সকল ট্যাগ — আপনার পছন্দের বিষয়ে টিউটোরিয়াল খুঁজুন।"
+>
+  <nav aria-label="ব্রেডক্রাম্ব" class="mb-6 text-sm text-muted-foreground">
+    <ol class="flex flex-wrap items-center gap-1.5">
+      <li><a href="/" class="hover:text-foreground hover:underline">হোম</a></li>
+      <li aria-hidden="true">/</li>
+      <li aria-current="page" class="text-foreground">ট্যাগ</li>
+    </ol>
+  </nav>
+
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold text-foreground sm:text-4xl">ট্যাগ</h1>
+    <p class="mt-3 text-lg leading-relaxed text-muted-foreground">
+      আপনার পছন্দের বিষয়ে টিউটোরিয়াল খুঁজুন।
+    </p>
+  </header>
+
+  {
+    tags.length > 0 ? (
+      <ul class="flex flex-wrap gap-3" role="list">
+        {tags.map((tag) => (
+          <li>
+            <a
+              href={`/tags/${tag.slug}/`}
+              class="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-4 py-2 text-sm font-medium text-foreground no-underline transition-colors hover:border-primary hover:text-primary"
+            >
+              {tag.name}
+              <span class="text-xs text-muted-foreground">
+                {tag.count}টি পোস্ট
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="py-10 text-center text-muted-foreground">
+        এখনো কোনো ট্যাগ নেই।
+      </p>
+    )
+  }
+</BaseLayout>

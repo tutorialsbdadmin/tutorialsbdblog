@@ -1,0 +1,128 @@
+---
+title: "Astro Framework কী?"
+description: "Astro framework কী, কেন ব্যবহার করবেন এবং কীভাবে শুরু করবেন — সহজ বাংলা টিউটোরিয়াল।"
+pubDate: 2026-09-01
+category: "Web Development"
+tags:
+  - Astro
+  - Web Development
+  - JavaScript
+author: "TutorialsBD"
+draft: false
+heroImage : "./feature.jpg"
+---
+
+সকালবেলা ঘুম থেকে উঠেই এখন আমাদের প্রথম কাজ হয়ে দাঁড়িয়েছে ফোনের স্ক্রিনে চোখ রাখা বা ইন্টারনেট ব্যবহার করা। কেউ হয়তো ব্রাউজার খুলে দিনের তাজা খবর পড়ে নিচ্ছেন, কেউ ফেসবুকে ‘শুভ সকাল’ লিখে স্ট্যাটাস দিচ্ছেন, আবার কেউ ইউটিউবে কোনো টিউটোরিয়াল দেখে নতুন কোনো স্কিল শেখার চেষ্টা করছেন। সত্যি বলতে, বর্তমান যুগে ইন্টারনেট আমাদের অন্ন, বস্ত্র বা বাসস্থানের মতোই আরেকটি মৌলিক চাহিদায় পরিণত হয়েছে, যা জীবনযাত্রাকে করে তুলেছে অভাবনীয় রকম সহজ।
+
+একবার সেই সময়ের কথা ভাবুন তো, যখন ইন্টারনেটের এত ব্যাপক ব্যবহার ছিল না। যেসব কাজ আমরা এখন চোখের নিমেষে করে ফেলি, আগে সেগুলো করতেই কেটে যেত কয়েক দিন। বিশ্ববিদ্যালয়ের ভর্তি ফর্ম তুলতে আগে যেখানে সশরীরে গিয়ে ঘণ্টার পর ঘণ্টা ক্লান্তিকর লাইনে দাঁড়িয়ে থাকতে হতো, এখন তা ঘরে বসেই এক ক্লিকে সম্পন্ন করা সম্ভব। একইভাবে, ট্রেন, বাস কিংবা বিমানের টিকিট কাটতে কাউন্টারে দীর্ঘ অপেক্ষা এখন প্রায় অতীত; বাসার বিছানায় বসেই পকেটের স্মার্টফোন দিয়ে মুহূর্তে টিকিট কেটে ফেলা যায়। এমনকি বিদ্যুৎ, পানি বা গ্যাসের বিল দেওয়ার জন্য আর রোদে পুড়ে লম্বা লাইনে দাঁড়াতে হয় না, ঘরে বসেই মুহূর্তের মধ্যে তা পরিশোধ করা যাচ্ছে।
+
+কিন্তু প্রযুক্তি যখন আমাদের জীবনকে এত সহজ করে দিচ্ছে, তখন কি কখনও মনে প্রশ্ন জাগে, **এই ইন্টারনেট আসলে কীভাবে কাজ করে? কীভাবে পৃথিবীর এক প্রান্ত থেকে অন্য প্রান্তে তথ্য সেকেন্ডের মধ্যে পৌঁছে যায়?**
+
+এই প্রশ্নগুলোর উত্তর জানতে হলে প্রথমেই বুঝতে হবে, **কম্পিউটার নেটওয়ার্ক (Computer Network)** কী?
+
+## Computer Network
+
+কম্পিউটার নেটওয়ার্ক হলো এমন একটি ব্যবস্থা যেখানে পরস্পরের সাথে সংযুক্ত **নোড** গুলো একে অপরের সাথে যোগাযোগ করতে এবং বিভিন্ন **রিসোর্স**  শেয়ার করতে পারে।
+
+
+
+## Node
+
+**নোড (Node)** হলো কম্পিউটার নেটওয়ার্কে এমন যেকোনো ডিভাইস, যা নেটওয়ার্কের সাথে সংযুক্ত থেকে **ডেটা পাঠাতে, গ্রহণ করতে বা উভয়ই করতে পারে**। অর্থাৎ, নেটওয়ার্কে যুক্ত প্রতিটি ডিভাইসকেই একটি **নোড** হিসেবে ধরা যায়। উপরের নেটওয়ার্কে PC-1, PC-2, PC-3, Printer, Switch, Router প্রত্যেকে এক একটি নোড। 
+
+## Resource
+
+**Resource (রিসোর্স)** বলতে নেটওয়ার্কে থাকা এমন কোনো **hardware, software, data, service বা network facility** বোঝায়, যা কোনো ডিভাইস বা ব্যবহারকারী নেটওয়ার্কের মাধ্যমে **access, use বা share** করতে পারে। উপরের নেটওয়ার্কে থাকা প্রিন্টারটি নেটওয়ার্কে যুক্ত PC-1, PC-2 এবং PC-3 ব্যবহার করে প্রিন্ট করতে পারে। সুতরাং, এখানে প্রিন্টারটি একটি রিসোর্স। আবার আপনি ব্রাউজারে *****tutorialsbd.com***** এ এক্সেস করলে একটি ওয়েবপেইজ দেখতে পান, এই ওয়েবপেইজটিও একটি রিসোর্স, যা একটি সার্ভার আপনার ব্রাউজার কে পাঠাচ্ছে।
+
+এই রিসোর্স প্রদান ও ব্যবহার করার উপর ভিত্তি করে নোড গুলোকে আবার দুইভাগে ভাগ করা যায়। 
+
+- ক্লায়েন্ট
+- সার্ভার
+
+## Client
+
+**ক্লায়েন্ট (Client)** হলো নেটওয়ার্কের এমন একটি ডিভাইস বা Software/Application, যা কোনো **Service বা Resource** ব্যবহারের জন্য **Server-এর কাছে Request** পাঠায়। যেমনঃ এখন আপনি একটি ব্রাউজার ব্যবহার করে এই পেইজ থেকে লেখা গুলি পড়ছেন। এখানে ব্রাউজার হলো ক্লায়েন্ট, আর ওয়েব পেইজ হলো রিসোর্স। আবার উপরের Figure 1.1  নেটওয়ার্কে PC-1, PC-2 বা PC-3 যদি নেটওয়ার্কে যুক্ত প্রিন্টার ব্যবহার করে প্রিন্ট করে তাহলে এখানে পিসি গুলো ক্লায়েন্ট।
+
+## Server
+
+**সার্ভার (Server)** হলো এমন একটি Computer System বা Software, যা নেটওয়ার্কের মাধ্যমে Client-এর কাছ থেকে **Request গ্রহণ (Receive)** করে, সেই Request **Process** করে এবং প্রয়োজনীয় **Resource বা Service-এর Response** Client-এর কাছে পাঠায়। যেমনঃ এখন আপনি যে ওয়েব পেইজ থেকে এই লেখাগুলো পড়ছেন , এই ওয়েব পেইজটি একটি কম্পিউটারে সংরক্ষণ করা আছে, ওই কম্পিউটারকেই আমরা সার্ভার বলতে পারি। আপনি আপনার ব্রুজারের মাধ্যমে ওই সার্ভারের কাছে রিকুয়েস্ট করেছেন  ওয়েবপেইজটি পাঠানোর জন্য। আবার, উপরের Figure 1.1 নেটওয়ার্কে প্রিন্টার টি এখানে সার্ভার (প্রিন্টার সার্ভার) হিসাবে কাজ করছে।
+
+## Endpoint / End Host
+
+**Endpoint** বা **End Host** বলতে নেটওয়ার্কের এমন একটি **ডিভাইস** বোঝায়, যেখানে নেটওয়ার্ক যোগাযোগের **source** বা **destination** থাকে। অর্থাৎ, যে ডিভাইস থেকে ডেটা/প্যাকেট নেটওয়ার্কে পাঠানো হয়, বা যে ডিভাইসে ডেটা/প্যাকেট পৌঁছায়, সেটিই Endpoint বা End Host।
+
+উদাহরণ হিসেবে, একটি নেটওয়ার্কে **Computer, Laptop, Smartphone, Server, IP Phone, Printer, IP Camera** ইত্যাদি Endpoint হতে পারে। যেমন, আপনি আপনার Computer থেকে একটি Web Server-এ Request পাঠালে আপনার Computer হলো **Source Endpoint**, আর Web Server হলো **Destination Endpoint**। উপরের Figure 1.1  এ PC-1, PC-2, PC-3, Printer হলো Endpoint বা End Host device ।
+
+## Network Device
+
+এখানে **Router, Switch, Firewall** ইত্যাদি সাধারণত End Host নয়। এগুলো নেটওয়ার্কের মধ্যে ডেটা/প্যাকেট **forward/transport** করতে সাহায্য করে। এগুলোকে বলা হয় **Network Device**
+
+নিচে কিছু সাধারন নেটওয়ার্ক ডিভাইসের সাথে পরিচিত হই।
+
+### Switch
+
+**Network Switch** হলো একটি **Networking Device**, যা একটি **Local Area Network (LAN)**-এর মধ্যে একাধিক **Device বা Host**-কে সংযুক্ত করে এবং তাদের মধ্যে Data Communication-এর সুযোগ তৈরি করে। 
+
+একটা **সুইচের মূল কাজ হলো LAN-এর মধ্যে থাকা বিভিন্ন ডিভাইসকে একে অপরের সাথে যুক্ত করা।** যেমন, একটা অফিসের সব **PC, Security Camera, Printer, Server** এবং অন্যান্য Network Device সাধারণত এক বা একাধিক Switch-এর সাথে কানেক্ট করা থাকে। এজন্য Switch-এ অনেকগুলো **Port** থাকে, যাতে বিভিন্ন **End Host** সহজেই কানেক্ট করা যায়। সাধারণত একটি Switch-এ **২৪ থেকে ৪৮টি Port** থাকতে পারে।
+ 
+
+#### Port
+
+**Port** হলো কোনো Network Device-এর একটি **Physical Connection Point**, যার মাধ্যমে অন্য ডিভাইসের সঙ্গে Network Connection তৈরি করা হয়। সাধারণত একটি **Network Cable**-এর দুই প্রান্ত দুইটি Device-এর Port-এ সংযুক্ত করে ডিভাইস দুটিকে Physically কানেক্ট করা হয়।
+
+একটি Port মূলত একটি Device এবং নেটওয়ার্কের অন্য ডিভাইসের মধ্যে **Interface** হিসেবে কাজ করে। তাই Networking-এর ক্ষেত্রে **Port** এবং **Interface**—এই শব্দ দুটি অনেক সময় একই অর্থে, বা একে অপরের পরিবর্তে ব্যবহার করা হয়। উদাহরণস্বরূপ, একটি Switch-এর Ethernet Port-এ Network Cable সংযুক্ত করে Computer, Server বা অন্য কোনো Network Device কানেক্ট করা যায়।
+
+মনে রাখবেন, **Switch-এর মূল কাজ হলো একই LAN-এর মধ্যে থাকা বিভিন্ন Device-কে একে অপরের সাথে Connect করা।** Switch সাধারণত LAN-এর বাইরে থাকা অন্য Network বা Internet-এর সাথে সরাসরি Connection তৈরি করে না।
+
+উদাহরণস্বরূপ, আপনি সাধারণত একটি **Switch-কে সরাসরি Internet-এর সাথে Connect করবেন না**। LAN-এর Device-গুলোকে Internet বা অন্য Network-এর সাথে Connect করতে আমাদের **Router** প্রয়োজন।
+
+### Router
+
+একটি **LAN-কে অন্য Network বা Internet-এর সাথে সংযুক্ত করতে Router-এর প্রয়োজন হয়।** সাধারণত একটি LAN-এর Switch, Router-এর সাথে যুক্ত থাকে। ফলে LAN-এর ভেতরের Device-গুলো Router-এর মাধ্যমে অন্য Network বা বাইরের LAN-এ থাকা Device-গুলোর সাথে যোগাযোগ করতে পারে।
+
+সহজভাবে বললে, **Switch একাধিক Device-কে একসাথে সংযুক্ত করে একটি LAN তৈরি করে, আর Router একাধিক LAN বা Network-কে একে অপরের সাথে যুক্ত করে।** অর্থাৎ, Switch মূলত একই Network-এর ভেতরে যোগাযোগের ব্যবস্থা করে, আর Router বিভিন্ন Network-এর মধ্যে Data Packet আদান-প্রদানের পথ নির্ধারণ করে।
+
+### Firewall
+
+আমরা যখন একটি **LAN**-কে Internet-এর সাথে যুক্ত করি, তখন সেই Network-এর Device-গুলো Internet-এর অন্যান্য Device-এর সাথে যোগাযোগ করতে পারে। কিন্তু Internet একটি বড় **Public Network**, যেখানে ভালো ও খারাপ—দুই ধরনের ব্যবহারকারীই থাকতে পারে। তাই Internet থেকে আসা অননুমোদিত বা ক্ষতিকর Traffic থেকে Network-কে সুরক্ষিত রাখতে **Firewall** ব্যবহার করা হয়।
+
+**Firewall** হলো একটি **Network Security System**, যা Network-এ আসা এবং Network থেকে বের হওয়া **Traffic** পরীক্ষা করে। এরপর নির্দিষ্ট কিছু **Rules** অনুযায়ী কোন Traffic **Allow** করা হবে এবং কোন Traffic **Deny/Block** করা হবে, তা নির্ধারণ করে। যেমন, নিরাপদ ও অনুমোদিত Traffic Firewall-এর মধ্য দিয়ে যেতে পারে, কিন্তু কোনো Attacker-এর ক্ষতিকর Traffic Firewall Block করতে পারে।
+
+Firewall সাধারণত দুই ধরনের—**Host-based Firewall** এবং **Network Firewall**। **Host-based Firewall** একটি নির্দিষ্ট Computer বা Host-কে সুরক্ষিত করে। যেমন, Windows Computer-এ থাকা **Microsoft Defender Firewall** একটি Host-based Firewall। এটি সেই Computer-এ আসা এবং Computer থেকে বের হওয়া Network Traffic পরীক্ষা করে এবং Rules অনুযায়ী Traffic Allow বা Block করে।
+
+অন্যদিকে, **Network Firewall** একটি সম্পূর্ণ Network-কে সুরক্ষিত করার জন্য ব্যবহার করা হয়। এটি Network-এর প্রবেশপথে বসানো থাকে এবং Network-এ প্রবেশ করা ও Network থেকে বের হওয়া Traffic পরীক্ষা করে। Configured Rules অনুযায়ী এটি অনুমোদিত Traffic Allow করে এবং অননুমোদিত বা ক্ষতিকর Traffic Block করে।
+
+### Wireless Router
+
+আমরা বাসাবাড়ি বা ছোট অফিসে যে **Wireless Router** বা **Wi‑Fi Router** ব্যবহার করি, সেটি আসলে শুধু একটি Router নয়। একটি সাধারণ হোম Wi‑Fi Router-এর মধ্যে একাধিক **Networking Function** একসাথে থাকে। অর্থাৎ, একটি ডিভাইসই একই সময়ে **Router, Network Switch, Wireless Access Point (AP)** এবং **Firewall** হিসেবে কাজ করতে পারে।
+
+এর **Router** অংশটি Local Network (LAN)-কে Internet বা অন্য Network-এর সাথে সংযুক্ত করে এবং Data Packet-এর জন্য সঠিক পথ নির্ধারণ করে। **Switch** অংশটি LAN-এর মধ্যে বিভিন্ন Wired Device-কে সংযুক্ত করে। **Wireless Access Point** অংশটি Wi‑Fi-এর মাধ্যমে Laptop, Smartphone, Smart TV ইত্যাদি Wireless Device-কে Network-এর সাথে যুক্ত করে। আর **Firewall** অংশটি Network Traffic নিয়ন্ত্রণ করে এবং অননুমোদিত Access থেকে Network-কে সুরক্ষিত রাখতে সাহায্য করে।
+
+এই কারণেই বাসাবাড়ি বা ছোট অফিসের জন্য আলাদা Router, Switch, Access Point ও Firewall ব্যবহার না করে একটি **All‑in‑One Wireless Router** দিয়েই প্রয়োজনীয় Network তৈরি করা যায়।
+
+
+
+
+CCNA শেখার ক্ষেত্রে শুধু বই পড়ে বা ভিডিও দেখে Network সম্পর্কে ধারণা নিলেই যথেষ্ট নয়। Network Device কীভাবে কাজ করে এবং কীভাবে Configure করতে হয়, তা শেখার জন্য হাতে-কলমে Practice করা খুবই গুরুত্বপূর্ণ। এই হাতে-কলমে Network Practice-কে সাধারণভাবে **Lab** বলা হয়।
+
+আমাদের Lab-এর মূল কাজ হবে Cisco-এর **Router এবং Switch** নিয়ে Practice করা। বাস্তবে এই Practice করার জন্য Cisco-এর আসল Router ও Switch কিনে ব্যবহার করা যায়। কিন্তু এতে অনেক খরচ হয় এবং সবসময় এটি সুবিধাজনকও নয়।
+
+কিন্তু এখানে আমারা **Cisco Packet Tracer** ব্যবহার করব।
+
+## Cisco Packet Tracer
+
+**Cisco Packet Tracer** হলো Cisco-এর তৈরি একটি Software, যার মাধ্যমে কম্পিউটারে বসেই একটি Virtual বা Simulated Network তৈরি করা যায়। অর্থাৎ এখানে আমরা বাস্তব Router, Switch, Firewall বা অন্য Network Device ব্যবহার করছি না; Software-এর মাধ্যমে এগুলোর একটি Simulation তৈরি করে Practice করছি।
+
+Packet Tracer-এর সবচেয়ে বড় সুবিধা হলো, Network Lab করার জন্য আমাদের আলাদা করে Cisco-এর Hardware কিনতে হয় না। এটি দ্রুত Setup করা যায় এবং বিভিন্ন ধরনের Network তৈরি করে Router ও Switch Configuration Practice করা যায়।
+
+### Packet Tracer Download ও Install
+
+Cisco Packet Tracer বিনামূল্যে Download করা যায়। এটি Download করার জন্য Cisco-এর একটি Account প্রয়োজন হয়। আপনার Cisco Account না থাকলে প্রথমে একটি Account তৈরি করতে হবে।
+
+Account তৈরি করে Login করার পর আপনার Computer-এর জন্য উপযুক্ত Packet Tracer Version Download করতে হবে। Packet Tracer Windows-এর 64-bit ও 32-bit Version-এর পাশাপাশি Ubuntu এবং macOS-এর জন্যও পাওয়া যায়।
+
+Packet Tracer Download করার পর সাধারণ Software-এর মতোই এটি Install করতে হবে।
+
+[Packet Tracer Download Link](https://www.netacad.com/resources/lab-downloads?courseLang=en-US)
+
+ডাউনলোড করার জন্য অবশ্যই লগিন করা থাকতে হবে।

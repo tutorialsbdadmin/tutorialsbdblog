@@ -1,0 +1,65 @@
+---
+title: "DNS কীভাবে কাজ করে?"
+description: "DNS (Domain Name System) কীভাবে কাজ করে, DNS রিজলিউশন প্রক্রিয়া এবং DNS রেকর্ড — সহজ বাংলা টিউটোরিয়াল।"
+pubDate: 2026-08-20
+category: "Networking"
+tags:
+  - DNS
+  - Networking
+  - CCNA
+author: "TutorialsBD"
+draft: false
+---
+
+## DNS কী?
+
+DNS (Domain Name System) হলো ইন্টারনেটের ফোনবুক। যখন আপনি ব্রাউজারে `google.com` টাইপ করেন, DNS সেই ডোমেইন নামকে একটি IP Address-এ রূপান্তরিত করে যাতে আপনার ডিভাইস সার্ভারে পৌঁছাতে পারে।
+
+## DNS রিজলিউশন প্রক্রিয়া
+
+### ধাপ ১: Recursive Resolver
+
+আপনার ব্রাউজার প্রথমে আপনার ISP-এর Recursive Resolver-এ প্রশ্ন পাঠায়।
+
+### ধাপ ২: Root Nameserver
+
+Resolver যদি ক্যাশেতে উত্তর না পায়, তাহলে এটি Root Nameserver-এ যায়। Root Nameserver `.com`, `.org`, `.net` ইত্যাদি TLD (Top-Level Domain) সম্পর্কে তথ্য দেয়।
+
+### ধাপ ৩: TLD Nameserver
+
+Root Nameserver `.com` TLD Nameserver-এর ঠিকানা দেয়।
+
+### ধাপ ৪: Authoritative Nameserver
+
+TLD Nameserver `google.com`-এর Authoritative Nameserver-এ পাঠায়, যেটি চূড়ান্ত IP Address দেয়।
+
+### ধাপ ৫: উত্তর ফেরত
+
+IP Address আবার Recursive Resolver হয়ে ব্রাউজারে ফিরে যায়।
+
+## DNS রেকর্ড ধরন
+
+| রেকর্ড | কাজ |
+|--------|------|
+| A | ডোমেইনকে IPv4 Address-এ ম্যাপ করে |
+| AAAA | ডোমেইনকে IPv6 Address-এ ম্যাপ করে |
+| CNAME | একটি ডোমেইনকে অন্য ডোমেইনের সাথে যুক্ত করে |
+| MX | ইমেইল সার্ভার নির্দেশ করে |
+| TXT | টেক্সট তথ্য যোগ করে (SPF, DKIM ইত্যাদি) |
+
+## DNS কমান্ড
+
+```bash
+# DNS রিজলুশন চেক
+nslookup google.com
+
+# DNS ট্রেস
+dig google.com
+
+# Windows এ DNS ফ্লাশ
+ipconfig /flushdns
+```
+
+## সারমর্ম
+
+DNS হলো ইন্টারনেটের অদৃশ্য কিন্তু অপরিহার্য অংশ। DNS রিজলিউশন প্রক্রিয়া এবং বিভিন্ন DNS রেকর্ড বোঝা নেটওয়ার্কিং এবং সাইবার সিকিউরিটি উভয় ক্ষেত্রেই সাহায্য করে।

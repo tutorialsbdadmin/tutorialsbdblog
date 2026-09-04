@@ -1,0 +1,173 @@
+---
+/**
+ * Theme selector: System / Light / Dark.
+ * Persists to localStorage; the blocking inline script in BaseLayout
+ * applies the class before first paint (no flash, no layout shift).
+ */
+---
+
+<div class="relative" data-theme-toggle>
+  <button
+    type="button"
+    class="inline-flex size-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+    aria-label="থিম পরিবর্তন করুন"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    data-theme-button
+  >
+    <!-- Sun (shown in dark mode) -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="hidden size-5 dark:block"
+      aria-hidden="true"
+      ><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path
+        d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path
+        d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path
+        d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path
+        d="m19.07 4.93-1.41 1.41"></path></svg
+    >
+    <!-- Moon (shown in light mode) -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="size-5 dark:hidden"
+      aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg
+    >
+  </button>
+
+  <div
+    class="absolute right-0 top-full z-50 mt-2 hidden w-40 overflow-hidden rounded-lg border border-border bg-card p-1 shadow-lg"
+    role="menu"
+    aria-label="থিম নির্বাচন"
+    data-theme-menu
+  >
+    <button
+      type="button"
+      role="menuitemradio"
+      data-theme-value="system"
+      class="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg>
+      সিস্টেম
+    </button>
+    <button
+      type="button"
+      role="menuitemradio"
+      data-theme-value="light"
+      class="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+      লাইট
+    </button>
+    <button
+      type="button"
+      role="menuitemradio"
+      data-theme-value="dark"
+      class="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+      ডার্ক
+    </button>
+  </div>
+</div>
+
+<script>
+  type ThemeValue = 'system' | 'light' | 'dark';
+
+  function getStoredTheme(): ThemeValue {
+    const stored = localStorage.getItem('theme');
+    return stored === 'light' || stored === 'dark' ? stored : 'system';
+  }
+
+  function applyTheme(theme: ThemeValue) {
+    const prefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)',
+    ).matches;
+    document.documentElement.classList.toggle(
+      'dark',
+      theme === 'dark' || (theme === 'system' && prefersDark),
+    );
+  }
+
+  function markActive(root: ParentNode, theme: ThemeValue) {
+    root
+      .querySelectorAll<HTMLButtonElement>('[data-theme-value]')
+      .forEach((btn) => {
+        const active = btn.dataset.themeValue === theme;
+        btn.setAttribute('aria-checked', String(active));
+        btn.classList.toggle('text-primary', active);
+        btn.classList.toggle('font-semibold', active);
+      });
+  }
+
+  document
+    .querySelectorAll<HTMLElement>('[data-theme-toggle]')
+    .forEach((root) => {
+      const button = root.querySelector<HTMLButtonElement>(
+        '[data-theme-button]',
+      );
+      const menu = root.querySelector<HTMLElement>('[data-theme-menu]');
+      if (!button || !menu) return;
+
+      markActive(root, getStoredTheme());
+
+      const closeMenu = () => {
+        menu.classList.add('hidden');
+        button.setAttribute('aria-expanded', 'false');
+      };
+      const openMenu = () => {
+        menu.classList.remove('hidden');
+        button.setAttribute('aria-expanded', 'true');
+      };
+
+      button.addEventListener('click', () => {
+        menu.classList.contains('hidden') ? openMenu() : closeMenu();
+      });
+
+      root
+        .querySelectorAll<HTMLButtonElement>('[data-theme-value]')
+        .forEach((option) => {
+          option.addEventListener('click', () => {
+            const theme =
+              (option.dataset.themeValue as ThemeValue) ?? 'system';
+            try {
+              localStorage.setItem('theme', theme);
+            } catch {
+              /* storage unavailable */
+            }
+            applyTheme(theme);
+            markActive(root, theme);
+            closeMenu();
+            button.focus();
+          });
+        });
+
+      document.addEventListener('click', (event) => {
+        if (!root.contains(event.target as Node)) closeMenu();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !menu.classList.contains('hidden')) {
+          closeMenu();
+          button.focus();
+        }
+      });
+    });
+
+  // Keep the UI in sync when the OS theme changes while in "system" mode
+  window
+    .matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', () => {
+      if (getStoredTheme() === 'system') applyTheme('system');
+    });
+</script>

@@ -1,0 +1,93 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const pageUrl = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<div class="not-prose mt-8 flex items-center gap-3 border-t border-border pt-6">
+  <span class="text-sm font-semibold text-foreground">শেয়ার:</span>
+  <button
+    type="button"
+    class="inline-flex items-center gap-1.5 rounded-md border border-border bg-muted px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+    aria-label="পোস্ট লিঙ্ক কপি করুন"
+    data-copy-link={pageUrl}
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+    <span data-copy-label>লিঙ্ক কপি করুন</span>
+  </button>
+  <button
+    type="button"
+    class="inline-flex items-center gap-1.5 rounded-md border border-border bg-muted px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+    aria-label="পোস্ট শেয়ার করুন"
+    data-share-button
+    data-share-title={title}
+    data-share-url={pageUrl}
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line></svg>
+    <span>শেয়ার</span>
+  </button>
+</div>
+
+<script>
+  function initShareButtons() {
+    document.querySelectorAll<HTMLButtonElement>('[data-copy-link]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const url = btn.dataset.copyLink;
+        if (!url) return;
+
+        let ok = false;
+        try {
+          await navigator.clipboard.writeText(url);
+          ok = true;
+        } catch {
+          const ta = document.createElement('textarea');
+          ta.value = url;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { ok = document.execCommand('copy'); } catch { ok = false; }
+          ta.remove();
+        }
+
+        const label = btn.querySelector<HTMLElement>('[data-copy-label]');
+        if (label) {
+          label.textContent = ok ? 'কপি হয়েছে!' : 'কপি ব্যর্থ';
+          window.setTimeout(() => {
+            label.textContent = 'লিঙ্ক কপি করুন';
+          }, 2000);
+        }
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('[data-share-button]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const title = btn.dataset.shareTitle ?? '';
+        const url = btn.dataset.shareUrl ?? '';
+
+        if (navigator.share) {
+          try {
+            await navigator.share({ title, url });
+          } catch {
+            // user cancelled
+          }
+        } else {
+          await navigator.clipboard.writeText(url);
+          const span = btn.querySelector('span:last-child');
+          if (span) {
+            span.textContent = 'কপি হয়েছে!';
+            window.setTimeout(() => {
+              span.textContent = 'শেয়ার';
+            }, 2000);
+          }
+        }
+      });
+    });
+  }
+
+  initShareButtons();
+  document.addEventListener('astro:after-swap', initShareButtons);
+</script>

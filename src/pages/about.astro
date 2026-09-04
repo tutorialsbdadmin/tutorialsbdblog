@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { SITE_NAME } from '../consts';
+---
+
+<BaseLayout
+  title="সম্পর্কে"
+  description="TutorialsBD সম্পর্কে জানুন — আমাদের লক্ষ্য, বিষয়বস্তু এবং মিশন।"
+>
+  <nav aria-label="ব্রেডক্রাম্ব" class="mb-6 text-sm text-muted-foreground">
+    <ol class="flex flex-wrap items-center gap-1.5">
+      <li><a href="/" class="hover:text-foreground hover:underline">হোম</a></li>
+      <li aria-hidden="true">/</li>
+      <li aria-current="page" class="text-foreground">সম্পর্কে</li>
+    </ol>
+  </nav>
+
+  <article class="mx-auto max-w-3xl">
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground sm:text-4xl">
+        {SITE_NAME} সম্পর্কে
+      </h1>
+    </header>
+
+    <div class="prose">
+      <p>
+        <strong>{SITE_NAME}</strong> হলো একটি বিনামূল্যের বাংলা প্রযুক্তি শেখার প্ল্যাটফর্ম। আমাদের লক্ষ্য হলো বাংলাভাষী মানুষদের জন্য সহজ, সরল এবং প্র্যাকটিক্যাল প্রযুক্তি টিউটোরিয়াল তৈরি করা।
+      </p>
+
+      <h2>আমাদের মিশন</h2>
+      <p>
+        আমরা বিশ্বাস করি প্রযুক্তি শেখার সুযোগ সকলের জন্য উন্মুক্ত হওয়া উচিত। তাই আমাদের সকল কনটেন্ট সম্পূর্ণ বিনামূল্যে। কোনো পেওয়াল, কোনো সাবস্ক্রিপশন ফি — শুধুমাত্র জ্ঞান ভাগাভাগি।
+      </p>
+
+      <h2>যে বিষয়ে আমরা লিখি</h2>
+      <ul>
+        <li>কম্পিউটার নেটওয়ার্কিং</li>
+        <li>সাইবার সিকিউরিটি</li>
+        <li>লিনাক্স</li>
+        <li>ওয়েব ডেভেলপমেন্ট</li>
+        <li>Astro, Next.js, JavaScript</li>
+        <li>DevOps ও ক্লাউড কম্পিউটিং</li>
+        <li>কৃত্রিম বুদ্ধিমত্তা (AI)</li>
+        <li>প্রোগ্রামিং</li>
+        <li>সিস্টেম অ্যাডমিনিস্ট্রেশন</li>
+        <li>CCNA</li>
+        <li>IT ফান্ডামেন্টালস</li>
+      </ul>
+
+      <h2>আমাদের সাথে যুক্ত হোন</h2>
+      <p>
+        নতুন টিউটোরিয়াল ও আপডেট সম্পর্কে জানতে আমাদের নিউজলেটারে সাবস্ক্রাইব করুন অথবা সোশ্যাল মিডিয়ায় আমাদের ফলো করুন।
+      </p>
+    </div>
+
+    <div class="mt-10">
+      <h2 class="mb-4 text-sm font-semibold tracking-wide text-foreground">
+        আমাদের ফলো করুন
+      </h2>
+      <SocialLinks variant="labeled" class="flex-col items-start gap-1" />
+    </div>
+
+    <div class="mt-12">
+      <Newsletter />
+    </div>
+  </article>
+</BaseLayout>

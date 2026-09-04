@@ -1,0 +1,75 @@
+---
+import { SITE_NAME, SITE_TAGLINE } from '../consts';
+import SocialLinks from './SocialLinks.astro';
+
+const year = new Date().getFullYear();
+
+const footerLinks = [
+  { label: 'সম্পর্কে', href: '/about/' },
+  { label: 'যোগাযোগ', href: '/contact/' },
+  { label: 'প্রাইভেসি পলিসি', href: '/privacy-policy/' },
+  { label: 'ট্যাগ', href: '/tags/' },
+  { label: 'RSS ফিড', href: '/rss.xml' },
+];
+---
+
+<footer
+  class="mt-16 border-t border-border bg-muted/50"
+>
+  <div class="px-4 py-12 sm:px-6 lg:px-10">
+    <div class="grid gap-10 md:grid-cols-3">
+      <!-- Site info -->
+      <div>
+        <a
+          href="/"
+          class="flex items-center gap-2 text-lg font-bold text-foreground no-underline"
+        >
+          <span
+            class="flex size-7 items-center justify-center rounded-md bg-primary font-mono text-sm font-bold text-primary-foreground"
+            aria-hidden="true">&lt;/&gt;</span
+          >
+          {SITE_NAME}
+        </a>
+        <p class="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
+          {SITE_TAGLINE} নেটওয়ার্কিং, সাইবার সিকিউরিটি, লিনাক্স, ওয়েব
+          ডেভেলপমেন্টসহ আইটি বিষয়ের ফ্রি বাংলা কনটেন্ট।
+        </p>
+      </div>
+
+      <!-- Links -->
+      <nav aria-label="ফুটার লিংক">
+        <h2 class="text-sm font-semibold tracking-wide text-foreground">
+          দরকারি লিংক
+        </h2>
+        <ul class="mt-3 space-y-2">
+          {
+            footerLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-sm text-muted-foreground no-underline transition-colors hover:text-foreground hover:underline"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <!-- Social -->
+      <div>
+        <h2 class="text-sm font-semibold tracking-wide text-foreground">
+          সোশ্যাল মিডিয়া
+        </h2>
+        <SocialLinks variant="labeled" class="mt-3 flex-col items-start gap-1" />
+      </div>
+    </div>
+
+    <div
+      class="mt-10 border-t border-border pt-6 text-center text-sm text-muted-foreground"
+    >
+      <p>© {year} {SITE_NAME}. সর্বস্বত্ব সংরক্ষিত।</p>
+    </div>
+  </div>
+</footer>

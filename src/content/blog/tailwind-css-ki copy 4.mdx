@@ -1,0 +1,76 @@
+---
+title: "Tailwind CSS কী?"
+description: "Tailwind CSS কী, কেন ব্যবহার করবেন এবং বেসিক ব্যবহার — সহজ বাংলা টিউটোরিয়াল।"
+pubDate: 2026-08-10
+category: "Web Development"
+tags:
+  - Tailwind CSS
+  - CSS
+  - Web Development
+author: "TutorialsBD"
+draft: false
+---
+
+## Tailwind CSS কী?
+
+Tailwind CSS হলো একটি ইউটিলিটি-ফার্স্ট CSS ফ্রেমওয়ার্ক। এটি আপনাকে CSS লেখার পরিবর্তে HTML-এ সরাসরি ইউটিলিটি ক্লাস ব্যবহার করতে দেয়।
+
+## কেন Tailwind CSS ব্যবহার করবেন?
+
+### দ্রুত ডেভেলপমেন্ট
+
+CSS ফাইল আলাদা করে না লিখে HTML-এ সরাসরি স্টাইল যোগ করুন।
+
+```html
+<h1 class="text-2xl font-bold text-blue-600">
+  হেলো ওয়ার্ল্ড
+</h1>
+```
+
+### কাস্টমাইজেশন
+
+Tailwind-এর কনফিগ ফাইল থেকে আপনার প্রয়োজন অনুযায়ী ডিজাইন সিস্টেম তৈরি করুন।
+
+### রেসপন্সিভ ডিজাইন
+
+`sm:`, `md:`, `lg:` প্রিফিক্স ব্যবহার করে সহজেই রেসপন্সিভ ডিজাইন তৈরি করুন।
+
+## বেসিক ব্যবহার
+
+### ইনস্টল
+
+```bash
+npm install -D tailwindcss
+```
+
+### কনফিগ
+
+```js
+// tailwind.config.js
+export default {
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+### সাধারণ ক্লাস
+
+```html
+<!-- বাটন -->
+<button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+  ক্লিক করুন
+</button>
+
+<!-- কার্ড -->
+<div class="bg-white shadow-md rounded-lg p-4">
+  <h2 class="text-xl font-bold">শিরোনাম</h2>
+  <p class="text-gray-600">বিবরণ</p>
+</div>
+```
+
+## সারমর্ম
+
+Tailwind CSS হলো আধুনিক ওয়েব ডেভেলপমেন্টের জন্য একটি দুর্দান্ত টুল। এটি আপনার ওয়ার্কফ্লোকে দ্রুত করে এবং কনসিস্টেন্ট ডিজাইন নিশ্চিত করে।

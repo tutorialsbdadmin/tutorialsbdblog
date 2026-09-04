@@ -1,0 +1,76 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import Pagination from '../../../components/Pagination.astro';
+import {
+  POSTS_PER_PAGE,
+} from '../../../consts';
+import {
+  getPublishedPosts,
+  getTags,
+  slugify,
+} from '../../../utils/blog';
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  const allPosts = await getPublishedPosts();
+  const tags = getTags(allPosts);
+
+  return tags.flatMap((tag) => {
+    const tagPosts = allPosts.filter((p) =>
+      p.data.tags.some((t) => slugify(t) === tag.slug),
+    );
+    return paginate(tagPosts, {
+      params: { tag: tag.slug },
+      pageSize: POSTS_PER_PAGE,
+    });
+  });
+};
+
+const { tag } = Astro.params;
+const { page } = Astro.props;
+
+const allPosts = await getPublishedPosts();
+const tags = getTags(allPosts);
+const currentTag = tags.find((t) => t.slug === tag);
+const tagName = currentTag?.name ?? tag;
+const totalPosts = page.total;
+---
+
+<BaseLayout
+  title={`${tagName} — ট্যাগ`}
+  description={`"${tagName}" ট্যাগের সকল পোস্ট।`}
+>
+  <nav aria-label="ব্রেডক্রাম্ব" class="mb-6 text-sm text-muted-foreground">
+    <ol class="flex flex-wrap items-center gap-1.5">
+      <li><a href="/" class="hover:text-foreground hover:underline">হোম</a></li>
+      <li aria-hidden="true">/</li>
+      <li><a href="/tags/" class="hover:text-foreground hover:underline">ট্যাগ</a></li>
+      <li aria-hidden="true">/</li>
+      <li aria-current="page" class="text-foreground">{tagName}</li>
+    </ol>
+  </nav>
+
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold text-foreground sm:text-4xl">
+      <span class="text-primary">#</span>{tagName}
+    </h1>
+    <p class="mt-2 text-sm text-muted-foreground">
+      মোট {totalPosts}টি পোস্ট
+    </p>
+  </header>
+
+  <div>
+    {page.data.map((post: any, i: number) => (
+      <PostCard post={post} eager={i === 0} />
+    ))}
+  </div>
+
+  <Pagination
+    prevUrl={page.url.prev}
+    nextUrl={page.url.next}
+    currentPage={page.currentPage}
+    numPages={Math.ceil(page.total / POSTS_PER_PAGE)}
+    basePath={`/tags/${tag}/`}
+  />
+</BaseLayout>

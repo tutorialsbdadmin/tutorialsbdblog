@@ -1,0 +1,51 @@
+---
+import { NAV_LINKS, SITE_NAME } from '../consts';
+import ThemeToggle from './ThemeToggle.astro';
+import MobileMenu from './MobileMenu.astro';
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur-sm"
+>
+  <div class="flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
+    <!-- Logo / site name -->
+    <a
+      href="/"
+      class="flex shrink-0 items-center gap-2 text-xl font-bold text-foreground no-underline"
+      aria-label={`${SITE_NAME} — হোমপেজ`}
+    >
+      <span
+        class="flex size-8 items-center justify-center rounded-lg bg-primary font-mono text-base font-bold text-primary-foreground"
+        aria-hidden="true">&lt;/&gt;</span
+      >
+      <span>{SITE_NAME}</span>
+    </a>
+
+    <!-- Desktop navigation -->
+    <nav aria-label="প্রধান নেভিগেশন" class="hidden md:block">
+      <ul class="flex items-center gap-1">
+        {
+          NAV_LINKS.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="rounded-md px-3 py-2 text-[1.05rem] font-medium text-muted-foreground no-underline transition-colors hover:bg-muted hover:text-foreground"
+                aria-current={
+                  Astro.url.pathname === link.href ? 'page' : undefined
+                }
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <!-- Right side actions -->
+    <div class="flex items-center gap-1.5">
+      <ThemeToggle />
+      <MobileMenu />
+    </div>
+  </div>
+</header>

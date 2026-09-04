@@ -1,0 +1,103 @@
+---
+import { Image } from 'astro:assets';
+import bannerImg from '../assets/banner.webp';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import CategoryPills from '../components/CategoryPills.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import Newsletter from '../components/Newsletter.astro';
+import Pagination from '../components/Pagination.astro';
+import {
+  SITE_NAME,
+  SITE_TAGLINE,
+  POSTS_PER_PAGE,
+  CATEGORY_INFO,
+} from '../consts';
+import {
+  getPublishedPosts,
+  getCategories,
+} from '../utils/blog';
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  const allPosts = await getPublishedPosts();
+  return paginate(allPosts, { pageSize: POSTS_PER_PAGE });
+};
+
+const { page } = Astro.props;
+const isFirstPage = page.currentPage === 1;
+
+const allPosts = await getPublishedPosts();
+const categories = getCategories(allPosts);
+---
+
+<BaseLayout title={SITE_NAME} description={SITE_TAGLINE}>
+  {isFirstPage && (
+    <>
+      <!-- Hero Section -->
+      <section class="mb-10 text-center">
+        <h1 class="text-3xl font-bold text-foreground sm:text-4xl">
+          {SITE_NAME}
+        </h1>
+        <p class="mx-auto mt-3 max-w-xl text-lg leading-relaxed text-muted-foreground">
+          {SITE_TAGLINE}
+        </p>
+      </section>
+
+      <!-- Banner -->
+      <section class="mb-10">
+        <Image
+          src={bannerImg}
+          alt="TutorialsBD ব্যানার — বাংলায় প্রযুক্তি টিউটোরিয়াল"
+          loading="eager"
+          fetchpriority="high"
+          class="h-auto w-full rounded-xl border border-border object-cover"
+        />
+      </section>
+
+      <!-- Social Media -->
+      <section class="mb-10 flex flex-col gap-4 rounded-xl border border-border bg-muted/50 p-5 sm:flex-row sm:items-center sm:justify-between">
+        <h2 class="text-sm font-semibold tracking-wide text-foreground">
+          সোশ্যাল মিডিয়া
+        </h2>
+        <SocialLinks />
+      </section>
+
+      <!-- Categories -->
+      <section id="categories" class="mb-12">
+        <h2 class="mb-4 text-sm font-semibold tracking-wide text-foreground">
+          ক্যাটাগরি
+        </h2>
+        <CategoryPills categories={categories} />
+      </section>
+    </>
+  )}
+
+  <!-- Posts -->
+  <section class="mb-12">
+    <h2 class="mb-6 text-sm font-semibold tracking-wide text-foreground">
+      {isFirstPage ? 'সাম্প্রতিক পোস্ট' : 'পোস্ট'}
+    </h2>
+    <div>
+      {page.data.map((post: any, i: number) => (
+        <PostCard post={post} eager={i === 0 && isFirstPage} />
+      ))}
+    </div>
+    {page.total === 0 && (
+      <p class="py-10 text-center text-muted-foreground">
+        এখনো কোনো পোস্ট প্রকাশ করা হয়নি।
+      </p>
+    )}
+  </section>
+
+  <Pagination
+    prevUrl={page.url.prev}
+    nextUrl={page.url.next}
+    currentPage={page.currentPage}
+    numPages={Math.ceil(page.total / POSTS_PER_PAGE)}
+    basePath="/"
+  />
+
+  <!-- Newsletter -->
+  <Newsletter />
+</BaseLayout>
