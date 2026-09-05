@@ -1,8 +1,12 @@
 ---
 /**
  * Theme selector: System / Light / Dark.
- * Persists to localStorage; the blocking inline script in BaseLayout
- * applies the class before first paint (no flash, no layout shift).
+ *
+ * - Persists the selected theme in localStorage.
+ * - The blocking inline script in BaseLayout applies the
+ *   theme before the first paint.
+ * - Synchronizes Giscus with the site's theme.
+ * - Works with lazy-loaded Giscus.
  */
 ---
 
@@ -15,7 +19,7 @@
     aria-expanded="false"
     data-theme-button
   >
-    <!-- Sun (shown in dark mode) -->
+    <!-- Sun: light mode -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -24,15 +28,22 @@
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="hidden size-5 dark:block"
+      class="hidden size-5"
+      data-theme-icon="light"
       aria-hidden="true"
-      ><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path
-        d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path
-        d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path
-        d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path
-        d="m19.07 4.93-1.41 1.41"></path></svg
     >
-    <!-- Moon (shown in light mode) -->
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="m4.93 4.93 1.41 1.41"></path>
+      <path d="m17.66 17.66 1.41 1.41"></path>
+      <path d="M2 12h2"></path>
+      <path d="M20 12h2"></path>
+      <path d="m6.34 17.66-1.41 1.41"></path>
+      <path d="m19.07 4.93-1.41 1.41"></path>
+    </svg>
+
+    <!-- Moon: dark mode -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -41,9 +52,30 @@
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="size-5 dark:hidden"
-      aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg
+      class="hidden size-5"
+      data-theme-icon="dark"
+      aria-hidden="true"
     >
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+    </svg>
+
+    <!-- Monitor: system mode -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="hidden size-5"
+      data-theme-icon="system"
+      aria-hidden="true"
+    >
+      <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+      <line x1="8" x2="16" y1="21" y2="21"></line>
+      <line x1="12" x2="12" y1="17" y2="21"></line>
+    </svg>
   </button>
 
   <div
@@ -52,122 +84,343 @@
     aria-label="থিম নির্বাচন"
     data-theme-menu
   >
+    <!-- System -->
     <button
       type="button"
       role="menuitemradio"
+      aria-checked="false"
       data-theme-value="system"
       class="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="size-4"
+        aria-hidden="true"
+      >
+        <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+        <line x1="8" x2="16" y1="21" y2="21"></line>
+        <line x1="12" x2="12" y1="17" y2="21"></line>
+      </svg>
+
       সিস্টেম
     </button>
+
+    <!-- Light -->
     <button
       type="button"
       role="menuitemradio"
+      aria-checked="false"
       data-theme-value="light"
       class="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="size-4"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.34 17.66-1.41 1.41"></path>
+        <path d="m19.07 4.93-1.41 1.41"></path>
+      </svg>
+
       লাইট
     </button>
+
+    <!-- Dark -->
     <button
       type="button"
       role="menuitemradio"
+      aria-checked="false"
       data-theme-value="dark"
       class="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="size-4"
+        aria-hidden="true"
+      >
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+      </svg>
+
       ডার্ক
     </button>
   </div>
 </div>
 
+
 <script>
   type ThemeValue = 'system' | 'light' | 'dark';
 
   function getStoredTheme(): ThemeValue {
-    const stored = localStorage.getItem('theme');
-    return stored === 'light' || stored === 'dark' ? stored : 'system';
+    try {
+      const stored = localStorage.getItem('theme');
+
+      if (
+        stored === 'light' ||
+        stored === 'dark'
+      ) {
+        return stored;
+      }
+
+      return 'system';
+    } catch {
+      return 'system';
+    }
   }
 
   function applyTheme(theme: ThemeValue) {
     const prefersDark = window.matchMedia(
       '(prefers-color-scheme: dark)',
     ).matches;
+
+    const shouldUseDark =
+      theme === 'dark' ||
+      (theme === 'system' && prefersDark);
+
     document.documentElement.classList.toggle(
       'dark',
-      theme === 'dark' || (theme === 'system' && prefersDark),
+      shouldUseDark,
     );
   }
 
-  function markActive(root: ParentNode, theme: ThemeValue) {
+  /*
+   * Tell Comment.astro that the theme changed.
+   */
+  function notifyGiscus() {
+    window.dispatchEvent(
+      new CustomEvent('site-theme-change'),
+    );
+  }
+
+  function updateToggleIcon(theme: ThemeValue) {
+    document
+      .querySelectorAll<HTMLElement>('[data-theme-icon]')
+      .forEach((el) => el.classList.add('hidden'));
+
+    const target =
+      theme === 'system'
+        ? 'system'
+        : theme === 'dark'
+          ? 'dark'
+          : 'light';
+
+    document
+      .querySelector<HTMLElement>(
+        `[data-theme-icon="${target}"]`,
+      )
+      ?.classList.remove('hidden');
+  }
+
+  function markActive(
+    root: ParentNode,
+    theme: ThemeValue,
+  ) {
     root
-      .querySelectorAll<HTMLButtonElement>('[data-theme-value]')
-      .forEach((btn) => {
-        const active = btn.dataset.themeValue === theme;
-        btn.setAttribute('aria-checked', String(active));
-        btn.classList.toggle('text-primary', active);
-        btn.classList.toggle('font-semibold', active);
+      .querySelectorAll<HTMLButtonElement>(
+        '[data-theme-value]',
+      )
+      .forEach((button) => {
+        const active =
+          button.dataset.themeValue === theme;
+
+        button.setAttribute(
+          'aria-checked',
+          String(active),
+        );
+
+        button.classList.toggle(
+          'text-primary',
+          active,
+        );
+
+        button.classList.toggle(
+          'font-semibold',
+          active,
+        );
       });
   }
 
   document
-    .querySelectorAll<HTMLElement>('[data-theme-toggle]')
+    .querySelectorAll<HTMLElement>(
+      '[data-theme-toggle]',
+    )
     .forEach((root) => {
-      const button = root.querySelector<HTMLButtonElement>(
-        '[data-theme-button]',
-      );
-      const menu = root.querySelector<HTMLElement>('[data-theme-menu]');
-      if (!button || !menu) return;
+      const button =
+        root.querySelector<HTMLButtonElement>(
+          '[data-theme-button]',
+        );
 
-      markActive(root, getStoredTheme());
+      const menu =
+        root.querySelector<HTMLElement>(
+          '[data-theme-menu]',
+        );
+
+      if (!button || !menu) {
+        return;
+      }
+
+      const initialTheme = getStoredTheme();
+
+      /*
+       * BaseLayout already applies this before
+       * first paint. This keeps the component state
+       * synchronized.
+       */
+      applyTheme(initialTheme);
+      updateToggleIcon(initialTheme);
+      markActive(root, initialTheme);
 
       const closeMenu = () => {
         menu.classList.add('hidden');
-        button.setAttribute('aria-expanded', 'false');
+
+        button.setAttribute(
+          'aria-expanded',
+          'false',
+        );
       };
+
       const openMenu = () => {
         menu.classList.remove('hidden');
-        button.setAttribute('aria-expanded', 'true');
+
+        button.setAttribute(
+          'aria-expanded',
+          'true',
+        );
       };
 
       button.addEventListener('click', () => {
-        menu.classList.contains('hidden') ? openMenu() : closeMenu();
+        if (menu.classList.contains('hidden')) {
+          openMenu();
+        } else {
+          closeMenu();
+        }
       });
 
       root
-        .querySelectorAll<HTMLButtonElement>('[data-theme-value]')
+        .querySelectorAll<HTMLButtonElement>(
+          '[data-theme-value]',
+        )
         .forEach((option) => {
           option.addEventListener('click', () => {
             const theme =
-              (option.dataset.themeValue as ThemeValue) ?? 'system';
+              (option.dataset.themeValue as ThemeValue) ||
+              'system';
+
             try {
-              localStorage.setItem('theme', theme);
+              localStorage.setItem(
+                'theme',
+                theme,
+              );
             } catch {
-              /* storage unavailable */
+              // localStorage unavailable.
             }
+
+            /*
+             * 1. Change website theme.
+             */
             applyTheme(theme);
+            updateToggleIcon(theme);
+
+            /*
+             * 2. Tell Comment.astro.
+             *
+             * Comment.astro will update Giscus,
+             * even if Giscus is lazy-loaded.
+             */
+            notifyGiscus();
+
+            /*
+             * 3. Update active menu item.
+             */
             markActive(root, theme);
+
+            /*
+             * 4. Close menu.
+             */
             closeMenu();
+
+            /*
+             * 5. Restore focus.
+             */
             button.focus();
           });
         });
 
-      document.addEventListener('click', (event) => {
-        if (!root.contains(event.target as Node)) closeMenu();
-      });
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && !menu.classList.contains('hidden')) {
-          closeMenu();
-          button.focus();
-        }
-      });
+      document.addEventListener(
+        'click',
+        (event) => {
+          const target = event.target as Node;
+
+          if (!root.contains(target)) {
+            closeMenu();
+          }
+        },
+      );
+
+      document.addEventListener(
+        'keydown',
+        (event) => {
+          if (
+            event.key === 'Escape' &&
+            !menu.classList.contains('hidden')
+          ) {
+            closeMenu();
+            button.focus();
+          }
+        },
+      );
     });
 
-  // Keep the UI in sync when the OS theme changes while in "system" mode
-  window
-    .matchMedia('(prefers-color-scheme: dark)')
-    .addEventListener('change', () => {
-      if (getStoredTheme() === 'system') applyTheme('system');
-    });
+  /*
+   * System theme changes.
+   */
+  const mediaQuery = window.matchMedia(
+    '(prefers-color-scheme: dark)',
+  );
+
+  mediaQuery.addEventListener(
+    'change',
+    () => {
+      if (getStoredTheme() !== 'system') {
+        return;
+      }
+
+      /*
+       * Update website.
+       */
+      applyTheme('system');
+      updateToggleIcon('system');
+
+      /*
+       * Update Giscus.
+       */
+      notifyGiscus();
+    },
+  );
 </script>
+
+

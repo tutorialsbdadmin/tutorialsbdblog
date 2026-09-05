@@ -1,12 +1,212 @@
 ---
 
+
+
 ---
 
 <div class="not-prose mt-12 border-t border-border pt-8">
-  <h2 className="text-xl font-bold text-foreground">মন্তব্য</h2>
-  <p class="mt-3 rounded-lg border border-border bg-muted p-4 text-sm leading-relaxed text-muted-foreground">
-    মন্তব্য সেকশন শীঘ্রই যোগ করা হবে। ততক্ষণে আপনি পোস্টটি সোশ্যাল মিডিয়ায় শেয়ার করতে পারেন বা আমাদের
-    <a href="/contact/" class="text-link underline hover:text-primary">যোগাযোগ পৃষ্ঠায়</a>
-    মতামত দিতে পারেন।
-  </p>
+  <h2 class="text-xl font-bold text-foreground">
+    মন্তব্য
+  </h2>
+
+  <div
+    class="giscus mt-6"
+    data-giscus-container
+  ></div>
 </div>
+
+<script is:inline>
+  (() => {
+    const GISCUS_ORIGIN = 'https://giscus.app';
+
+    function getSiteTheme() {
+      return document.documentElement.classList.contains('dark')
+        ? 'dark'
+        : 'light';
+    }
+
+    function getGiscusTheme() {
+      return getSiteTheme();
+    }
+
+    function getGiscusIframe() {
+      return document.querySelector('iframe.giscus-frame');
+    }
+
+    function sendThemeToGiscus() {
+      const iframe = getGiscusIframe();
+
+      if (!iframe?.contentWindow) {
+        return false;
+      }
+
+      iframe.contentWindow.postMessage(
+        {
+          giscus: {
+            setConfig: {
+              theme: getGiscusTheme(),
+            },
+          },
+        },
+        GISCUS_ORIGIN,
+      );
+
+      return true;
+    }
+
+    function watchGiscusIframe(container) {
+      const observer = new MutationObserver(() => {
+        const iframe = getGiscusIframe();
+
+        if (!iframe) {
+          return;
+        }
+
+        /*
+         * Giscus iframe exists now.
+         * Wait until the iframe itself has loaded.
+         */
+        iframe.addEventListener(
+          'load',
+          () => {
+            sendThemeToGiscus();
+          },
+          { once: true },
+        );
+
+        /*
+         * In case the iframe has already loaded.
+         */
+        sendThemeToGiscus();
+      });
+
+      observer.observe(container, {
+        childList: true,
+        subtree: true,
+      });
+    }
+
+    function loadGiscus(container) {
+      /*
+       * Prevent duplicate initialization.
+       */
+      if (container.dataset.giscusLoaded === 'true') {
+        return;
+      }
+
+      container.dataset.giscusLoaded = 'true';
+
+      /*
+       * IMPORTANT:
+       *
+       * BaseLayout has already applied the site's theme
+       * before this script runs.
+       *
+       * Therefore we can determine the correct initial
+       * Giscus theme directly from <html class="dark">.
+       */
+      const initialTheme = getGiscusTheme();
+
+      const script = document.createElement('script');
+
+      script.src = 'https://giscus.app/client.js';
+
+      script.dataset.repo = 'tutorialsbdadmin/comments';
+      script.dataset.repoId = 'R_kgDOT9aNdA';
+      script.dataset.category = 'General';
+      script.dataset.categoryId = 'DIC_kwDOT9aNdM4DDtyz';
+      script.dataset.mapping = 'pathname';
+      script.dataset.strict = '0';
+      script.dataset.reactionsEnabled = '1';
+      script.dataset.emitMetadata = '0';
+      script.dataset.inputPosition = 'bottom';
+
+      /*
+       * Use the ACTUAL current site theme.
+       *
+       * This fixes the initial dark-mode problem.
+       */
+      script.dataset.theme = initialTheme;
+
+      script.dataset.lang = 'en';
+
+      /*
+       * Keep lazy loading.
+       */
+      script.dataset.loading = 'lazy';
+
+      script.crossOrigin = 'anonymous';
+      script.async = true;
+
+      watchGiscusIframe(container);
+
+      container.appendChild(script);
+    }
+
+    function initialize() {
+      const containers =
+        document.querySelectorAll(
+          '[data-giscus-container]',
+        );
+
+      containers.forEach((container) => {
+        loadGiscus(container);
+      });
+    }
+
+    /*
+     * ThemeToggle dispatches this event whenever
+     * the user changes Light / Dark / System.
+     */
+    window.addEventListener(
+      'site-theme-change',
+      () => {
+        /*
+         * Give the browser a moment to apply
+         * the new <html class="dark"> state.
+         */
+        requestAnimationFrame(() => {
+          sendThemeToGiscus();
+        });
+      },
+    );
+
+    /*
+     * Watch <html> for changes to the dark class.
+     *
+     * This also catches OS theme changes when
+     * "System" mode is selected.
+     */
+    const themeObserver =
+      new MutationObserver(() => {
+        sendThemeToGiscus();
+      });
+
+    themeObserver.observe(
+      document.documentElement,
+      {
+        attributes: true,
+        attributeFilter: ['class'],
+      },
+    );
+
+    /*
+     * Initialize normally.
+     */
+    initialize();
+
+    /*
+     * Astro View Transitions / client-side navigation.
+     *
+     * If the page changes without a full reload,
+     * initialize Giscus again for the new page.
+     */
+    document.addEventListener(
+      'astro:page-load',
+      () => {
+        initialize();
+      },
+    );
+  })();
+</script>
+
