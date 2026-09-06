@@ -112,13 +112,28 @@ const jsonLdItems = structuredData
           const prefersDark = window.matchMedia(
             '(prefers-color-scheme: dark)',
           ).matches;
-          document.documentElement.classList.toggle(
-            'dark',
-            theme === 'dark' || (theme === 'system' && prefersDark),
-          );
+          const isDark = theme === 'dark' || (theme === 'system' && prefersDark);
+          document.documentElement.classList.toggle('dark', isDark);
+          document.documentElement.setAttribute('data-pf-theme', isDark ? 'dark' : 'light');
         } catch {
           /* localStorage unavailable — fall back to light */
         }
+      })();
+    </script>
+    <script is:inline>
+      (() => {
+        const syncPagefindTheme = (mutations) => {
+          for (const m of mutations) {
+            if (m.attributeName === 'class') {
+              const dark = document.documentElement.classList.contains('dark');
+              document.documentElement.setAttribute('data-pf-theme', dark ? 'dark' : 'light');
+            }
+          }
+        };
+        new MutationObserver(syncPagefindTheme).observe(
+          document.documentElement,
+          { attributes: true, attributeFilter: ['class'] },
+        );
       })();
     </script>
 

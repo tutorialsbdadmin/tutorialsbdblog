@@ -2,6 +2,7 @@
 import { NAV_LINKS, SITE_NAME } from '../consts';
 import ThemeToggle from './ThemeToggle.astro';
 import MobileMenu from './MobileMenu.astro';
+import PagefindConfig from 'astro-pagefind/components/PagefindConfig.astro';
 ---
 
 <header
@@ -44,8 +45,48 @@ import MobileMenu from './MobileMenu.astro';
 
     <!-- Right side actions -->
     <div class="flex items-center gap-1.5">
+      <PagefindConfig />
+      <button
+        type="button"
+        class="inline-flex size-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        aria-label="অনুসন্ধান খুলুন"
+        data-search-button
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="size-5"
+          aria-hidden="true"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+      </button>
       <ThemeToggle />
       <MobileMenu />
     </div>
   </div>
+  <pagefind-modal reset-on-close />
 </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.querySelector('pagefind-modal');
+    const btn = document.querySelector('[data-search-button]');
+    if (modal && btn) {
+      btn.addEventListener('click', () => modal.open());
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      document.querySelector('pagefind-modal')?.open();
+    }
+  });
+</script>
