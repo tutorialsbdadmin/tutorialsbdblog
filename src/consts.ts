@@ -17,6 +17,7 @@ export const NAV_LINKS: NavLink[] = [
   { label: 'ক্যাটাগরি', href: '/#categories' },
   { label: 'ট্যাগ', href: '/tags/' },
   { label: 'সম্পর্কে', href: '/about/' },
+  { label: 'যোগাযোগ', href: '/contact/' },
 ];
 
 export type SocialIcon = 'facebook' | 'youtube' | 'github';

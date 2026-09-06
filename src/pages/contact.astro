@@ -28,9 +28,10 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
     <form
       id="contact-form"
       class="space-y-5"
-      action={`https://api.web3forms.com/submit?access_key=${web3formsKey}`}
+      action="https://api.web3forms.com/submit"
       method="POST"
     >
+      <input type="hidden" name="access_key" value={web3formsKey} />
       <!-- Honeypot -->
       <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
 
