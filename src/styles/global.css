@@ -436,4 +436,14 @@ details[open] > summary .toc-chevron {
   transform: rotate(90deg);
 }
 
+/* ------------------------------------------------------------------
+   Hide Pagefind search result excerpts
+------------------------------------------------------------------- */
+.pf-result-excerpt,
+.pf-searchbox-result-excerpt,
+.pf-heading-excerpt,
+.pf-skeleton-excerpt {
+  display: none !important;
+}
+
 
