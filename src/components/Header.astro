@@ -6,7 +6,8 @@ import PagefindConfig from 'astro-pagefind/components/PagefindConfig.astro';
 ---
 
 <header
-  class="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur-sm"
+  class="sticky top-0 z-40 bg-card/90 backdrop-blur-md"
+  style="box-shadow: var(--shadow-md);"
 >
   <div class="flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
     <!-- Logo / site name -->
@@ -30,7 +31,7 @@ import PagefindConfig from 'astro-pagefind/components/PagefindConfig.astro';
             <li>
               <a
                 href={link.href}
-                class="rounded-md px-3 py-2 text-[1.05rem] font-medium text-muted-foreground no-underline transition-colors hover:bg-muted hover:text-foreground"
+                class="rounded-full px-3 py-2 text-[1.05rem] font-medium text-muted-foreground no-underline transition-colors hover:bg-muted hover:text-foreground"
                 aria-current={
                   Astro.url.pathname === link.href ? 'page' : undefined
                 }

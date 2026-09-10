@@ -34,7 +34,7 @@ const Heading = headingLevel;
           height={360}
           loading={eager ? 'eager' : 'lazy'}
           decoding="async"
-          class="aspect-video w-full rounded-lg border border-border object-cover"
+          class="aspect-video w-full rounded-lg border border-border object-cover transition-shadow hover:shadow-md"
         />
       </a>
     )
@@ -44,7 +44,7 @@ const Heading = headingLevel;
     <Heading class="text-xl leading-snug font-bold sm:text-2xl sm:leading-snug">
       <a
         href={url}
-        class="text-foreground no-underline transition-colors hover:text-primary"
+        class="text-foreground no-underline transition-all duration-200 hover:text-primary"
       >
         {data.title}
       </a>

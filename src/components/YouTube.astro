@@ -1,0 +1,70 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  id: string;
+  title?: string;
+  thumb?: string;
+}
+
+const { id, title = 'YouTube video', thumb } = Astro.props;
+const thumbnail = thumb ?? `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+---
+
+<div class="not-prose my-8">
+  <div
+    class="relative cursor-pointer overflow-hidden rounded-xl border border-border group"
+    style="box-shadow: var(--shadow-md);"
+    data-youtube-player={id}
+  >
+    <div class="aspect-video">
+      <Image
+        src={thumbnail}
+        alt={title}
+        width={1280}
+        height={720}
+        loading="lazy"
+        class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div
+          class="flex size-16 items-center justify-center rounded-full bg-red-600 text-white shadow-lg transition-transform duration-200 group-hover:scale-110 sm:size-20"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="ml-1 size-8 sm:size-10"
+          >
+            <path d="M8 5v14l11-7z"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>('[data-youtube-player]')
+    .forEach((el) => {
+      el.addEventListener('click', () => {
+        const id = el.dataset.youtubePlayer;
+        if (!id) return;
+
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+        iframe.title = el.querySelector('img')?.alt ?? 'YouTube video';
+        iframe.allow =
+          'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+        iframe.className = 'absolute inset-0 h-full w-full';
+
+        const container = el.querySelector('.aspect-video');
+        if (container) {
+          container.innerHTML = '';
+          container.appendChild(iframe);
+        }
+      });
+    });
+</script>

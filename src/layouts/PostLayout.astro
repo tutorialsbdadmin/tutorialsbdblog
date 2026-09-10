@@ -114,7 +114,7 @@ const breadcrumbLd = {
         <header class="mb-8">
           <a
             href={`/category/${categorySlug}/`}
-            class="inline-block rounded-full border border-border bg-muted px-3 py-1 text-sm font-medium text-muted-foreground no-underline transition-colors hover:border-primary hover:text-primary"
+            class="inline-block rounded-full border border-border bg-muted px-3 py-1 text-sm font-medium text-muted-foreground no-underline transition-all duration-200 hover:border-primary hover:text-primary hover:shadow-sm"
           >
             {data.category}
           </a>
@@ -179,7 +179,7 @@ const breadcrumbLd = {
                 loading="eager"
                 fetchpriority="high"
                 decoding="async"
-                class="aspect-video w-full rounded-xl border border-border object-cover"
+                class="aspect-video w-full rounded-xl border border-border object-cover transition-shadow hover:shadow-lg"
               />
             </figure>
           )
@@ -201,7 +201,7 @@ const breadcrumbLd = {
               {data.tags.map((tag) => (
                 <a
                   href={`/tags/${slugify(tag)}/`}
-                  class="rounded-full border border-border bg-muted px-3 py-1 text-sm text-muted-foreground no-underline transition-colors hover:border-primary hover:text-primary"
+                  class="rounded-full border border-border bg-muted px-3 py-1 text-sm text-muted-foreground no-underline transition-all duration-200 hover:border-primary hover:text-primary hover:shadow-sm"
                 >
                   {tag}
                 </a>

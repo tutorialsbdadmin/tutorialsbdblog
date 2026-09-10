@@ -11,7 +11,7 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site).toString();
   <span class="text-sm font-semibold text-foreground">শেয়ার:</span>
   <button
     type="button"
-    class="inline-flex items-center gap-1.5 rounded-md border border-border bg-muted px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+    class="inline-flex items-center gap-1.5 rounded-md border border-border bg-muted px-3 py-1.5 text-sm text-muted-foreground transition-all duration-200 hover:border-primary hover:text-primary hover:shadow-sm"
     aria-label="পোস্ট লিঙ্ক কপি করুন"
     data-copy-link={pageUrl}
   >
@@ -20,7 +20,7 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site).toString();
   </button>
   <button
     type="button"
-    class="inline-flex items-center gap-1.5 rounded-md border border-border bg-muted px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+    class="inline-flex items-center gap-1.5 rounded-md border border-border bg-muted px-3 py-1.5 text-sm text-muted-foreground transition-all duration-200 hover:border-primary hover:text-primary hover:shadow-sm"
     aria-label="পোস্ট শেয়ার করুন"
     data-share-button
     data-share-title={title}

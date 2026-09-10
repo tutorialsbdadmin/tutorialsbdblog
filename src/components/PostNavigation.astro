@@ -13,7 +13,7 @@ const { prev, next } = Astro.props;
       {prev && (
         <a
           href={`/posts/${prev.id}/`}
-          class="group flex flex-col rounded-lg border border-border p-4 no-underline transition-colors hover:border-primary"
+          class="group flex flex-col rounded-lg border border-border p-4 no-underline transition-all duration-200 hover:border-primary hover:shadow-sm"
         >
           <span class="text-xs text-muted-foreground">পূর্ববর্তী পোস্ট</span>
           <span class="mt-1 text-sm font-semibold text-foreground transition-colors group-hover:text-primary line-clamp-2">
@@ -24,7 +24,7 @@ const { prev, next } = Astro.props;
       {next && (
         <a
           href={`/posts/${next.id}/`}
-          class="group flex flex-col rounded-lg border border-border p-4 text-right no-underline transition-colors hover:border-primary sm:col-start-2"
+          class="group flex flex-col rounded-lg border border-border p-4 text-right no-underline transition-all duration-200 hover:border-primary hover:shadow-sm sm:col-start-2"
         >
           <span class="text-xs text-muted-foreground">পরবর্তী পোস্ট</span>
           <span class="mt-1 text-sm font-semibold text-foreground transition-colors group-hover:text-primary line-clamp-2">

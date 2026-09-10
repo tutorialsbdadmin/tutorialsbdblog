@@ -61,8 +61,8 @@ function getPageUrl(pageNum: number): string {
             class:list={[
               'inline-flex size-9 items-center justify-center rounded-md border text-sm font-medium no-underline transition-colors',
               p === currentPage
-                ? 'border-primary bg-primary text-primary-foreground'
-                : 'border-border bg-muted text-muted-foreground hover:border-primary hover:text-primary',
+                ? 'border-primary bg-primary text-primary-foreground shadow-sm'
+                : 'border-border bg-muted text-muted-foreground hover:border-primary hover:text-primary hover:shadow-sm',
             ]}
             aria-current={p === currentPage ? 'page' : undefined}
           >

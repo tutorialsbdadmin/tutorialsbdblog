@@ -15,7 +15,7 @@ const { categories } = Astro.props;
         <li>
           <a
             href={`/category/${category.slug}/`}
-            class="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted px-4 py-1.5 text-[0.95rem] font-medium text-foreground no-underline transition-colors hover:border-primary hover:text-primary"
+            class="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted px-4 py-1.5 text-[0.95rem] font-medium text-foreground no-underline transition-all duration-200 hover:border-primary hover:text-primary hover:shadow-sm"
           >
             {category.name}
             <span class="text-xs text-muted-foreground">
